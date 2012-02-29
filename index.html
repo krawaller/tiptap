@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title>Tiptap Demo</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link rel="stylesheet" href="css/style.css?v=2">
+
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1>Tiptap Demo</h1>
+			<p>This is a demo of the tiptap library, created to ease the pain when dealing with advanced tapping on mobile devices. It does this by giving you transparent access to new fancy tap events fired using regular DOM events. It also integrates the immensely good $1 Unistroke recognizer with the Protractor enhancement, meaning a crazy fast stroke recognizer you can throw on any element by adding the class <code>strokable</code> to it</p>
+			<nav>
+				<ul>
+					<li><a href="#strokes">Strokes</a></li>
+					<li><a href="#noughts">Noughts</a></li>
+					<li><a href="#taps">Taps</a></li>
+					<li><a href="#swipes">Swipes</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<div id="main" role="main">
+			
+			<section id="strokes">
+				<h2>Unistroke recognizer</h2>
+				<p>By setting the class <code>strokable</code> on an element, any touch originating inside that element will overlay a tracking canvas over the page and once the touch ends, fire any recognized unistroke names to the element.</p>
+				<p>The unistrokes available are the following standard ones from $1 unistroke recognizer project, which is the brilliant recognition engine used (however, they do not endorse this project in any way). You can add any strokes you'd want by adding them as templates to the recognizer.</p>
+				
+				<p>Tiptap uses the Protractor enhancement to the $1 unistroke recognizer, and it's insanely quick and efficient. Recognizing a stroke takes only a couple of milliseconds on a modern iOS device.</p>
+				
+				<div class="content">
+					<h3>Stroke test area</h3>
+					<img src="http://depts.washington.edu/aimgroup/proj/dollar/unistrokes.gif" />
+					<p>Try the strokes from the image above</p>
+					<div class="strokable stroke-catcher"></div>
+				</div>
+			</section>
+			
+			<section id="noughts">
+				<h2>Noughts and Crosses</h2>
+				<p>
+					Draw either a nought or a cross in either of these boxes. You'll have to start touching inside the box, but once touching you can draw the sign all over the screen.
+				</p>
+				<div class="content"></div>
+			</section>
+
+			<section id="taps">
+				<h2>Taps</h2>
+				<div class="content"></div>
+			</section>
+			
+			<section id="swipes">
+				<h2>Swipes</h2>
+				<div class="content"></div>
+			</section>
+			
+		</div>
+
+		<footer>
+
+		</footer>
+	</div>
+
+	<script src="zepto.js"></script>
+	<script src="minidollar.js"></script>
+	<script src="tiptap.js"></script>
+	<script>
+		(function(){
+			/*document.addEventListener('click', function(e){
+				console.log(document.elementFromPoint(e.clientX, e.clientY));
+			});*/
+			
+			var slice = Array.prototype.slice;
+			Function.prototype.bind = function(ctx){ 
+				var fn = this;
+				return function(){ 
+					fn.apply(ctx || fn, slice.call(arguments)); 
+				}; 
+			};
+		
+			function react(){
+				$(this).addClass('react');
+			}
+		
+			var numTapMap = {
+	            2: 'double',
+	            3: 'triple',
+	            4: 'quad',
+				5: 'quint'
+	        },
+			numFingerMap = {
+	            2: 'twofinger',
+	            3: 'threefinger',
+	            4: 'fourfinger',
+				5: 'fivefinger'
+	        },
+	        numFingerMapHuman = {
+				1: 'Single-finger',
+	            2: 'Two-finger',
+	            3: 'Three-finger',
+	            4: 'Four-finger',
+				5: 'Five-finger'
+	        };
+			
+			function getEventName(fingers, numTaps, tapHold){
+				return (numFingerMap[fingers] || '') + (numTapMap[numTaps] || '') + 'tap' + (tapHold ? 'hold' : '')
+			}
+			
+			function getEventNameHuman(fingers, numTaps, tapHold){
+				return [
+					(numFingerMapHuman[fingers] || ''), 
+					' ', 
+					((numTapMap[numTaps] && numTapMap[numTaps] + '-') || ''),
+					'tap', 
+					(tapHold ? '-hold' : '')
+				].join("");
+			}
+			
+			var tapSections = [], swipeSections = [];
+			for(var i = 1; i <= 3; i++){
+				var num = numTapMap[i]||'',
+					tapSection = [
+						'<section>',
+							'<h3>'+(numFingerMapHuman[i])+' examples</h2>',
+							'<ul class="examples">',
+								'<li data-react="'+getEventName(i, 1)+'">'+getEventNameHuman(i, 1)+' me</li>',
+								'<li data-react="'+getEventName(i, 1, true)+'">'+getEventNameHuman(i, 1, true)+' me</li>',
+								'<li data-react="'+getEventName(i, 2)+'">'+getEventNameHuman(i, 2)+' me</li>',
+								'<li data-react="'+getEventName(i, 3)+'">'+getEventNameHuman(i, 3)+' me</li>',
+								'<li data-react="'+getEventName(i, 4)+'">'+getEventNameHuman(i, 4)+' me</li>',
+							'</ul>',
+						'</section>'
+					].join("\n"),
+					
+					swipeSection = [
+						'<section>',
+							'<h3>'+(numFingerMapHuman[i])+' examples</h2>',
+							'<ul class="examples">',
+								'<li data-react="'+(numFingerMap[i]||'')+'swipeleft'+'">',
+									(numFingerMapHuman[i]+' swipe-left me'),
+								'</li>',
+								'<li data-react="'+(numFingerMap[i]||'')+'swiperight'+'">',
+									(numFingerMapHuman[i]+' swipe-right me'),
+								'</li>',
+							'</ul>',
+						'</section>'
+					].join("\n");
+					
+				tapSections.push(tapSection);
+				swipeSections.push(swipeSection);
+			}
+			$('#taps .content').html(tapSections.join("\n"));
+			$('#swipes .content').html(swipeSections.join("\n"));
+		
+			$('[data-react]').each(function(){
+				var $this = $(this),
+					event = $this.attr('data-react');
+			
+				$this.bind(event, react.bind(this));	
+			});
+			
+			var size = 6, str = '<table class="noughts">';
+			for(var y = 0; y < size; y++){
+				str += '<tr>';
+				for(var x = 0; x < size; x++){
+					str += '<td class="strokable"></td>';
+				}
+				str += '</tr>';
+			}
+			str += '</table>';
+			$('#noughts .content')
+				.html(str)
+				.delegate('td', 'x circle delete check rectangle', function(e){
+					var eventNameMap = {
+						x: 'cross',
+						check: 'cross',
+						"delete": 'cross',
+						circle: 'nought',
+						rectangle: 'nought'
+					},
+					eventName = eventNameMap[e.type];
+					if(eventName){
+						this.className = 'stroke ' + eventName;
+					}
+				});
+			
+			$('.stroke-catcher').bind('triangle x rectangle circle check caret zigzag arrow leftsquarebracket rightsquarebracket v delete leftcurlybrace rightcurlybrace star pigtail', function(e){
+				$(this).text(e.type);
+			});
+			
+			document.addEventListener('webkitAnimationEnd', function(e){
+				if(e.animationName === 'react'){
+					$(e.target).removeClass('react');
+				}
+			});
+
+			setTimeout(function(){ window.scrollTo(0, 1) }, 0);
+		})();
+	</script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+body {
+	background: #eee;
+	margin: 1em;
+}
+
+* {
+	-webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
+   -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
+   -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+   -webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */
+}
+
+.examples {
+	padding: 0;
+	margin: 0;
+}
+
+p, h1, h2, h3, .examples li, .stroke-catcher, nav {
+	font-family: "Lucida Grande", "Helvetica Neue", Helvetica, sans-serif;
+	text-shadow: 0px 1px 0px #fff;
+}
+
+.examples li {
+	-webkit-transform: translate3d(0, 0, 0);
+	padding: 1.4em 0.8em;
+	background: #c1e7ff;
+	margin: 1em 0;
+	list-style: none;
+	border-radius: 1em;
+	font-size: 1em;
+	border: 1px solid #bbb;
+	-webkit-box-shadow: inset 0 1px 0px #fff, 0 1px 0px #fff;
+}
+
+section img {
+	max-width: 100%;
+}
+
+section {
+	border-bottom: 1px solid #bbb;
+	border-top: 1px solid #fff;
+	padding: 1.5em 0;
+}
+
+section:first-of-type { border-top: none; padding-top: 0; }
+section:last-of-type { border-bottom: none; padding-bottom: 0; }
+
+table.noughts, tr.noughts, td.noughts {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+.noughts td, .stroke-catcher {
+	width: 40px;
+	height: 40px;
+    border-top: 1px solid #888;
+    border-left: 1px solid #888;
+    
+    border-right: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    -webkit-border-radius: 3px;
+    background-image: -webkit-gradient(radial, 34 34, 58, 44 44, 0, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0)) );
+    -webkit-box-shadow: inset 1px 1px 4px rgba(32, 32, 32, 0.2);
+	position: relative;
+	line-height: 20px;
+	overflow: hidden;
+}
+
+.nought:after, .cross:after {
+	text-align: center;
+	display: block;
+	font-size: 3em;
+	font-family: "Marker Felt";
+}
+
+.nought:after {
+	content: 'o';
+}
+
+.cross:after {
+	content: 'x';
+}
+
+@-webkit-keyframes react {
+	0% {
+		-webkit-transform: scale(1) translate3d(0, 0, 0);
+	}
+	
+	50% {
+		-webkit-transform: scale(0.95) translate3d(0, 0, 0);
+	}
+	
+	100% {
+		-webkit-transform: scale(1) translate3d(0, 0, 0);
+	}
+}
+	
+.react {
+	-webkit-animation-name: react;
+	-webkit-animation-duration: 0.3s;
+	-webkit-animation-timing-function: ease-out;
+}
+
+.stroke-catcher {
+	width: 100%;
+	height: 120px;
+	font-size: 2em;
+	line-height: 120px;
+	text-align: center;	
+	background: rgba(0, 0, 0, 0.1);
+}
+
+nav a {
+	text-decoration: none;
+	color: #29a2ff;
+	font-weight: bold;
+	padding: 0.5em;
+	display: block;
+}
