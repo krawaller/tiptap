@@ -2,7 +2,7 @@
 
 The TipTap library was created to ease the pain when dealing with advanced tapping on mobile devices. It does this by giving you transparent access to new fancy tap events fired using regular DOM events. It also integrates the immensely good $1 Unistroke recognizer with the Protractor enhancement, meaning a crazy fast unistroke recognizer you can throw on any element by adding the class <code>strokable</code> to it.
 
-Check out the [demo](http://link/to/demo), especially on your iOS device. Android support is currently somewhat wonky.
+Check out the [demo](http://dev.krawaller.se/tiptap/), especially on your iOS device. Android support is currently somewhat wonky.
 
 # New tap events
 
