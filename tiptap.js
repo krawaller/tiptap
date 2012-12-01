@@ -6,7 +6,7 @@
         slice = Array.prototype.slice,
         addEventListener = 'addEventListener',
 
-        recognizer = DollarRecognizer && new DollarRecognizer();
+        recognizer = typeof DollarRecognizer !== "undefined" && new DollarRecognizer();
 
     // document.elementFromPoint wants different arguments depending on browser. This should use some clever feature detection instead of sniffing.
     var elementFromWhat = /safari|opera|chrome/i.test(navigator.userAgent) ? 'client' : 'page',
